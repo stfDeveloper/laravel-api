@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\post;
 use App\Category;
+use App\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +14,8 @@ class PostController extends Controller
     protected $validate = [
         'title'=>'required|string|max:300',
         'content'=>'required|max:2000',
-        'image'=>'nullable|image|mimes:jpg,png,jpeg'
+        'image'=>'nullable|image|mimes:jpg,png,jpeg',
+        'tags'=>'nullable|exists:tags,id'
     ];
     /**
      * Display a listing of the resource.
@@ -34,7 +36,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories','tags'));
     }
 
     /**
@@ -48,8 +51,8 @@ class PostController extends Controller
         $request->validate($this->validate);
         $data = $request->all();
         if (isset($data['image'])) {
-            $img_path = Storage::put('uploads',$data ['image']);
-            $data['image'] = $img_path;
+            $image = Storage::put('uploads',$data ['image']);
+            $data['image'] = $image;
         };
         //slug restituisce una URL più leggibile sostituendo gli spazi con dei '-'
         $slug = Str::slug($data['title']);
@@ -62,7 +65,8 @@ class PostController extends Controller
         $data['slug']=$slug;
         $newPost = new post();
         $newPost->fill($data);
-        $newPost ->save();
+        $newPost->save();
+        $newPost ->tags()->sync(isset($data['tags'])? $data['tags']:[]);
         return redirect()->route('admin.posts.show', $newPost->id);
     }
 

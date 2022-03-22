@@ -19,6 +19,12 @@
             <div>
                 category:{{$post->category? $post->category->type:'-'}}
             </div>
+            <div>
+                Tags:
+                @foreach ($post->tags as $tag)
+                <span class="d-block">{{$tag->name}}</span>
+                @endforeach
+            </div>
             
             <div class="postContent">
                     {{$post->content}}

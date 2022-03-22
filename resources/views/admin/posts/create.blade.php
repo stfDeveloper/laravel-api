@@ -23,6 +23,15 @@
                 @endforeach
             </select>
             <div class="form-group">
+                <label for="" class="">Tags:</label>
+                @foreach ($tags as $element)
+                <div class="">
+                  <input type="checkbox" class="form-check-input" name="tags[]" value="{{$element->id}}">
+                  <label for="{{$element->slug}}">{{$element->name}}</label>
+                </div>
+                @endforeach
+            <div class="form-group">
+
                 <label for="image"></label>
                 <input type="file" name="image">
             </div>
@@ -41,7 +50,7 @@
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
-    </div>
         @endif
+    </div>
 </div>
 
