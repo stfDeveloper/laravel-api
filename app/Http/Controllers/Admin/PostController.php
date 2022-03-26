@@ -15,6 +15,7 @@ class PostController extends Controller
         'title'=>'required|string|max:300',
         'content'=>'required|max:2000',
         'img'=>'nullable|image|mimes:jpg,png,jpeg',
+        'category'=>'nullable',
         'tags'=>'nullable|exists:tags,id'
     ];
     /**

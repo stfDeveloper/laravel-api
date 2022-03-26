@@ -1994,6 +1994,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Main',
   data: function data() {
@@ -37679,9 +37682,29 @@ var render = function () {
     _c(
       "ul",
       _vm._l(_vm.posts, function (post, index) {
-        return _c("li", { key: index }, [
-          _vm._v("\n            " + _vm._s(post.title) + "\n        "),
-        ])
+        return _c(
+          "li",
+          { key: index },
+          [
+            _vm._v("\n            " + _vm._s(post.title) + " "),
+            _c("br"),
+            _vm._v("\n            " + _vm._s(post.content) + " "),
+            _c("br"),
+            _vm._v(" "),
+            post.category != null
+              ? _c("span", [
+                  _vm._v("categories: " + _vm._s(post.category.type)),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._l(post.tags, function (tag, index) {
+              return _c("span", { key: index }, [
+                _vm._v("tags:" + _vm._s(tag.name) + " "),
+              ])
+            }),
+          ],
+          2
+        )
       }),
       0
     ),

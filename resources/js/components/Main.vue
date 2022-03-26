@@ -2,7 +2,10 @@
   <div>
       <ul>
           <li v-for="(post ,index) in posts" :key="index">
-              {{post.title}}
+              {{post.title}} <br>
+              {{post.content}} <br>
+              <span v-if="post.category != null">categories: {{post.category.type}}</span>
+              <span v-for="(tag, index) in post.tags" :key="index">tags:{{tag.name}} </span>
           </li>
       </ul>
   </div>
