@@ -18,6 +18,22 @@
             @endforeach
         </select>
     </div> 
+
+    <div class="form-group">
+        <label for="tags">
+         Tags:
+        </label>
+        @foreach ($tags as $tag)
+        <div class="form-check">
+            <input type="checkbox" name="tags[]" class="form-check-input" value="{{$tag->id}}" id="{{$tag->slug}}" {{$post->tags->contains($tag)? 'checked': ''}}>
+            <label for="{{$tag->slug}}" class="form-check-label">
+                {{$tag->name}}
+            </label>
+        </div>
+        @endforeach
+    </div>
+
+
     <button type="submit">Salva</button>
     <a href="{{route("admin.posts.index")}}"><button type="button">back</button></a>
     </div>

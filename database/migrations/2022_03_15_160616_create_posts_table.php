@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
+            $table->string('img')->nullable();
             $table->boolean('published')->default(false);
             $table->string('slug')->unique();
             $table->timestamps();

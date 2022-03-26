@@ -14,7 +14,7 @@ class PostController extends Controller
     protected $validate = [
         'title'=>'required|string|max:300',
         'content'=>'required|max:2000',
-        'image'=>'nullable|image|mimes:jpg,png,jpeg',
+        'img'=>'nullable|image|mimes:jpg,png,jpeg',
         'tags'=>'nullable|exists:tags,id'
     ];
     /**
@@ -50,9 +50,9 @@ class PostController extends Controller
     {
         $request->validate($this->validate);
         $data = $request->all();
-        if (isset($data['image'])) {
-            $image = Storage::put('uploads',$data ['image']);
-            $data['image'] = $image;
+        if (isset($data['img'])) {
+            $img_path = Storage::put('uploads',$data ['img']);
+            $data['img'] = $img_path;
         };
         //slug restituisce una URL più leggibile sostituendo gli spazi con dei '-'
         $slug = Str::slug($data['title']);
@@ -90,7 +90,8 @@ class PostController extends Controller
     public function edit(post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post','categories'));
+        $tags= Tag::all();
+        return view('admin.posts.edit', compact('post','categories','tags'));
     }
 
     /**
@@ -118,6 +119,7 @@ class PostController extends Controller
         }
         $data['slug']=$slug;
         $post->update($data);
+        $post->tags()->sync(isset($data['tags']) ? $data['tags'] : [] );
         return redirect()->route('admin.posts.index');
     }
 

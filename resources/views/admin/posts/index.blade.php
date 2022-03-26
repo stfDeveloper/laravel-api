@@ -30,8 +30,8 @@
                     {{$post->content}}
             </div>
             <div>
-                @if ($post->image != null)
-                <img class="image" src="{{ asset('images/'. $post->image) }}" alt="">
+                @if ($post->img != null)
+                <img class="image" src="{{ asset('storage/'. $post->img) }}" alt="{{$post->title}}">
                 @else 
                 <img class="image" src="{{ asset('images/noimage.png')}}" alt="">
                 @endif

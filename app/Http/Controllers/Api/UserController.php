@@ -16,6 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $posts = post::all();
+        // $posts = post::with("category","tags")->get();
         return response()->json($posts);
     }
 
